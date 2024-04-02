@@ -21,13 +21,6 @@ public class Main {
         long whiteMinorPieces = whiteKnights | whiteBishops;
         printBitboard(whiteMinorPieces);
         System.out.println("----------------------");
-        /*
-        for (int i = 0; i < 64; i++) {
-            System.out.println(i + ": " + BitboardUtil.findBit(whitePawns, i));
-        }
-        */
-
-
 
 
         long testBoard      = 0b0000000000000000000000000000000000000000000000000000000000000000L;

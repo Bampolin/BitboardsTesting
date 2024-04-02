@@ -24,4 +24,21 @@ public class BitboardUtil {
         file = 7 - file;
         return setBit(board, bit, file + (row * 8));
     }
+
+    public static long setBit(long board, int bit, int file, int row) {
+        if (bit != 0 && bit != 1) {
+            return 0;
+        }
+
+        boolean newBit;
+
+        if (bit == 0) {
+            newBit = false;
+        } else {
+            newBit = true;
+        }
+
+        file = 7 - file;
+        return setBit(board, newBit, file + (row * 8));
+    }
 }

@@ -12,11 +12,4 @@ public class BoardHistOneColor {
     public BoardHistOneColor() {
         states = new ArrayList<>();
     }
-
-    public void move(Coordinates from, Coordinates to) {
-        BoardStateOneColor newEntry = states.getLast();
-
-
-
-    }
 }

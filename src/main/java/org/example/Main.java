@@ -2,37 +2,29 @@ package org.example;
 
 public class Main {
     public static void main(String[] args) {
-        long whitePawns     = 0b0000000000000000000000000000000000000000000000001111111100000000L;
-        long whiteRooks     = 0b0000000000000000000000000000000000000000000000000000000010000001L;
-        long whiteKnights   = 0b0000000000000000000000000000000000000000000000000000000001000010L;
-        long whiteBishops   = 0b0000000000000000000000000000000000000000000000000000000000100100L;
-        long whiteQueen     = 0b0000000000000000000000000000000000000000000000000000000000010000L;
-        long whiteKing      = 0b0000000000000000000000000000000000000000000000000000000000001000L;
+        BoardStateOneColor white = BoardStatePreBuilder.startPositionWhite();
+        BoardStateOneColor black = BoardStatePreBuilder.startPositionBlack();
+
+        BoardStateOneColor whiteManipulated = white.copy();
+        whiteManipulated.remove(0, 1);
+        whiteManipulated.remove(1, 0);
+        whiteManipulated.remove(2, 0);
+        whiteManipulated.remove(3, 0);
+        whiteManipulated.remove(4, 0);
+        whiteManipulated.remove(5, 0);
+        whiteManipulated.remove(6, 0);
+        whiteManipulated.remove(7, 0);
+
+        BoardStateOneColor blackManipulated = black.copy();
+        blackManipulated.remove(0, 6);
 
 
-        long blackPawns = 0b0000000011111111000000000000000000000000000000000000000000000000L;
 
-
-        long allWhitePieces = whiteBishops | whiteKnights | whiteKing | whiteQueen | whitePawns | whiteRooks;
-
+        printBitboard(blackManipulated.orAll());
         System.out.println("----------------------");
-        printBitboard(allWhitePieces);
-        System.out.println("----------------------");
-        long whiteMinorPieces = whiteKnights | whiteBishops;
-        printBitboard(whiteMinorPieces);
-        System.out.println("----------------------");
+        printBitboard(whiteManipulated.orAll());
 
-
-        long testBoard      = 0b0000000000000000000000000000000000000000000000000000000000000000L;
-        testBoard = BitboardUtil.setBit(testBoard, true, 0, 0);
-        testBoard = BitboardUtil.setBit(testBoard, true, 1, 4);
-        testBoard = BitboardUtil.setBit(testBoard, true, 1, 7);
-        testBoard = BitboardUtil.setBit(testBoard, true, 7, 7);
-        printBitboard(testBoard);
-
-
-
-
+        System.out.println(whiteManipulated.findPseudoValidRookMoves(5, 4, blackManipulated.orAll()));
 
     }
 

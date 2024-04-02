@@ -23,4 +23,17 @@ public class Move {
     public Coordinates getTo() {
         return new Coordinates(toFile, toRow);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+
+        sb.append(ColumnMapper.mapIntToColumn(fromFile));
+        sb.append(fromRow + 1);
+        sb.append("-");
+        sb.append(ColumnMapper.mapIntToColumn(toFile));
+        sb.append(toRow + 1);
+
+        return sb.toString();
+    }
 }

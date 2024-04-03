@@ -32,16 +32,10 @@ public class BoardStateOneColor {
         // enemyBoard is a overlaid Bitboard, representing all enemy pieces
         // valid moves are rookPos +1, -1, +8, -8
         // as long as board not ending / no enemy piece (inclusive) / no friendly piece (exclusive)
-
-
         int row = rookPos / 8;
         int file = rookPos - (row * 8);
 
-
         return findPseudoValidRookMoves(file, row, enemyBoard);
-
-
-
     }
 
     public List<Move> findPseudoValidRookMoves(int file, int row, long enemyBoard) {
@@ -53,22 +47,6 @@ public class BoardStateOneColor {
         long friendlyBoard = orAll();
 
         // up
-//        for (int posUp = 1; posUp <= moveSpanUp; posUp++) {
-//
-//
-//            if (BitboardUtil.findBit(friendlyBoard, file, row + posUp)) {
-//                // occupied by friendly piece -> no more moves
-//                break;
-//            }
-//
-//
-//            result.add(new Move(file, row, file, row + posUp));
-//
-//            if (BitboardUtil.findBit(enemyBoard, file, row + posUp)) {
-//                // occupied by enemy piece -> last allowed square
-//                break;
-//            }
-//        }
         for (int posUp = 0; posUp < moveSpanUp; posUp++) {
 
             if (BitboardUtil.findBit(friendlyBoard, file, row + posUp + 1)) {
@@ -135,15 +113,17 @@ public class BoardStateOneColor {
         return result;
     }
 
+
+
     public long orAll() {
         return pawns | knights | bishops | rooks | queens | king;
     }
 
-    public long andAll() {
-        // only for testing, should always be only 0s
-
-        return pawns & knights & bishops & rooks & queens & king;
-    }
+//    public long andAll() {
+//        // only for testing, should always be only 0s
+//
+//        return pawns & knights & bishops & rooks & queens & king;
+//    }
 
     public void remove(int file, int row) {
         // very ugly

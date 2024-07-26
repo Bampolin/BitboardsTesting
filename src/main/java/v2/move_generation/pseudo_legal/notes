@@ -1,0 +1,7 @@
+für jede Figur eigene Klasse mit static Methode
+Params:
+    * BoardStateOneColor self  // Zustand der Figuren, vom Spieler der den Zug macht
+    * BoardStateOneColor other // Zustand des Gegners
+
+
+

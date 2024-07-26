@@ -26,7 +26,7 @@ class BitboardUtilTest {
                 for (int j = 0; j < 8; j++) {
 
                     if (j == 1) {
-                        System.out.println("file: " + i + "|row: " + j + ": " + BitboardUtil.findBit(board1, i, j));
+                        System.out.println("file: " + i + "|rank: " + j + ": " + BitboardUtil.findBit(board1, i, j));
                         assertEquals(true, BitboardUtil.findBit(board1, i, j));
                     } else {
                         assertEquals(false, BitboardUtil.findBit(board1, i, j));
@@ -44,7 +44,7 @@ class BitboardUtilTest {
                 for (int j = 0; j < 8; j++) {
 
                     if (i == 7) {
-                        System.out.println("file: " + i + "|row: " + j + ": " + BitboardUtil.findBit(board2, i, j));
+                        System.out.println("file: " + i + "|rank: " + j + ": " + BitboardUtil.findBit(board2, i, j));
                         assertEquals(true, BitboardUtil.findBit(board2, i, j));
                     } else {
                         assertEquals(false, BitboardUtil.findBit(board2, i, j));
@@ -62,7 +62,7 @@ class BitboardUtilTest {
                 for (int j = 0; j < 8; j++) {
 
                     if (i == 7 || j == 1) {
-                        System.out.println("file: " + i + "|row: " + j + ": " + BitboardUtil.findBit(board3, i, j));
+                        System.out.println("file: " + i + "|rank: " + j + ": " + BitboardUtil.findBit(board3, i, j));
                         assertEquals(true, BitboardUtil.findBit(board3, i, j));
                     } else {
                         assertEquals(false, BitboardUtil.findBit(board3, i, j));

@@ -18,7 +18,6 @@
     </properties>
 
     <dependencies>
-        <!-- Hier fügst du deine Abhängigkeiten ein -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -128,7 +127,6 @@
                     <target>16</target>
                 </configuration>
             </plugin>
-            <!-- Weitere Plugins können hier hinzugefügt werden -->
         </plugins>
     </build>
 </project>

@@ -2,6 +2,6 @@ für jede Figur eigene Klasse mit static Methode
 Params:
     * BoardStateOneColor self  // Zustand der Figuren, vom Spieler der den Zug macht
     * BoardStateOneColor other // Zustand des Gegners
-
+    * int pos                  // Koordinaten der Figur für die die erlaubten Züge berechnet werden sollen
 
 

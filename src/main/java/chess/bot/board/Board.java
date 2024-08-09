@@ -7,6 +7,10 @@ public class Board {
         board = new int[64];
     }
 
+    public Board(int[] board) {
+        setBoard(board);
+    }
+
     public void setSquare(int square, int value) {
         board[square] = value;
     }

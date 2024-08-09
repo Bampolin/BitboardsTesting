@@ -1,0 +1,3 @@
+Idee:
+    * PseudoMoves:
+        - Die Positionen der Figuren nicht für jeden Funktionsaufruf neu suchen, sondern übergeben, zumindest die Möglichkeit dafür schaffen

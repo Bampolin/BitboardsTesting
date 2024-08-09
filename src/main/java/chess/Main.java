@@ -3,14 +3,62 @@ package chess;
 import chess.bot.board.Board;
 import chess.bot.board.Piece;
 import chess.bot.board.PiecesListBoard;
+import chess.bot.search.PseudoMoves;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+        Board board = setUpTestBoard1();
+        printBoard(board);
+
+
+        testPseudoValidRookMoves(board);
+    }
+
+
+
+    public static Board setUpTestBoard1() {
+        Board board = new Board();
+        board.setSquare(1, Piece.WHITE | Piece.KING);
+        board.setSquare(2, Piece.WHITE | Piece.ROOK);
+        board.setSquare(3, Piece.WHITE | Piece.ROOK);
+        board.setSquare(4, Piece.WHITE | Piece.QUEEN);
+        board.setSquare(7, Piece.WHITE | Piece.ROOK);
+
+        board.setSquare(8, Piece.WHITE | Piece.PAWN);
+        board.setSquare(9, Piece.WHITE | Piece.PAWN);
+        board.setSquare(10, Piece.WHITE | Piece.PAWN);
+        //board.setSquare(11, Piece.WHITE | Piece.PAWN);
+        board.setSquare(12, Piece.WHITE | Piece.PAWN);
+        board.setSquare(31, Piece.WHITE | Piece.PAWN);
+
+        board.setSquare(57, Piece.BLACK | Piece.KING);
+        board.setSquare(58, Piece.BLACK | Piece.ROOK);
+        board.setSquare(59, Piece.BLACK | Piece.ROOK);
+        board.setSquare(60, Piece.BLACK | Piece.QUEEN);
+        board.setSquare(63, Piece.BLACK | Piece.BISHOP);
+        board.setSquare(62, Piece.BLACK | Piece.BISHOP);
+        board.setSquare(44, Piece.BLACK | Piece.KNIGHT);
+
+        board.setSquare(55, Piece.BLACK | Piece.PAWN);
+        board.setSquare(36, Piece.BLACK | Piece.PAWN);
+        board.setSquare(43, Piece.BLACK | Piece.PAWN);
+        board.setSquare(50, Piece.BLACK | Piece.PAWN);
+        board.setSquare(49, Piece.BLACK | Piece.PAWN);
+        board.setSquare(48, Piece.BLACK | Piece.PAWN);
+
+        return board;
+    }
+
+    public static Board setUpTestBoard2() {
         Board board = new Board();
         board.setSquare(1, Piece.WHITE | Piece.KING);
         board.setSquare(2, Piece.WHITE | Piece.ROOK);
         board.setSquare(4, Piece.WHITE | Piece.QUEEN);
         board.setSquare(7, Piece.WHITE | Piece.ROOK);
+
 
         board.setSquare(8, Piece.WHITE | Piece.PAWN);
         board.setSquare(9, Piece.WHITE | Piece.PAWN);
@@ -33,13 +81,8 @@ public class Main {
         board.setSquare(49, Piece.BLACK | Piece.PAWN);
         board.setSquare(48, Piece.BLACK | Piece.PAWN);
 
-
-        printBoard(board);
-
-        testPiecesList(new PiecesListBoard(board));
+        return board;
     }
-
-
 
     private static void testPieces() {
         /*
@@ -115,5 +158,73 @@ black pawn   	1101    14
 
         System.out.println("black: ");
         System.out.println(board.getBlackPiecesCords());
+    }
+
+    public static void testPseudoValidRookMoves(Board board) {
+        List<Integer> rooksCords = new ArrayList<>();
+
+        for (int i = 0; i <= 63; i++) {
+            if (Piece.isRook(board.getBoard()[i])) {
+                rooksCords.add(i);
+            }
+        }
+
+        System.out.print("Rooks at: ");
+        for (int i : rooksCords) {
+            System.out.print(i + " | ");
+        }
+        System.out.println();
+
+
+        for (int rook : rooksCords)
+        {
+            System.out.println("=====================================================");
+            System.out.println("moves for " + rook);
+
+
+            System.out.println("no precompute");
+
+            long before = System.nanoTime();
+            System.out.println(PseudoMoves.rookMoves(board.getBoard(), rook));
+            long after = System.nanoTime();
+            System.out.println(after - before + " nanoseconds");
+            System.out.println((after - before) / 1000 + " microseconds");
+
+            System.out.println("-----------------------------------------------------");
+            System.out.println("with precompute");
+
+            // precompute positions
+
+            List<Integer> cordsSelf;
+            List<Integer> cordsEnemy;
+            PiecesListBoard listBoard = new PiecesListBoard(board);
+
+            if (Piece.isWhite(board.getBoard()[rook])) {
+                cordsSelf = listBoard.getWhitePiecesCords();
+                cordsEnemy = listBoard.getBlackPiecesCords();
+            } else {
+                cordsSelf = listBoard.getBlackPiecesCords();
+                cordsEnemy = listBoard.getWhitePiecesCords();
+            }
+
+            before = System.nanoTime();
+            System.out.println(PseudoMoves.rookMoves(board.getBoard(), rook, cordsSelf, cordsEnemy));
+            after = System.nanoTime();
+            System.out.println(after - before + " nanoseconds");
+            System.out.println((after - before) / 1000 + " microseconds");
+
+
+        }
+
+    }
+
+    public static void printAllCords() {
+        Board board = new Board();
+
+        for (int i = 0; i <= 63; i++) {
+            board.setSquare(i, i);
+        }
+
+        printBoard(board);
     }
 }

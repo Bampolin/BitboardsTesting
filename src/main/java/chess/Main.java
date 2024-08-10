@@ -3,7 +3,7 @@ package chess;
 import chess.bot.board.Board;
 import chess.bot.board.Piece;
 import chess.bot.board.PiecesListBoard;
-import chess.bot.search.PseudoMoves;
+import chess.bot.board.moves.PseudoMoves;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +15,26 @@ public class Main {
 
 
         testPseudoValidRookMoves(board);
+
+        System.out.println("=======================================================");
+        System.out.println("=======================================================");
+        System.out.println("=======================================================");
+        System.out.println("=======================================================");
+
+        printAllCords();
+
+        System.out.println("down");
+        System.out.println(36 / 8);
+
+        System.out.println("up");
+        System.out.println(7 - (36 / 8));
+
+        System.out.println("right");
+        System.out.println(36 % 8);
+
+        System.out.println("left");
+        System.out.println(7 - (36 % 8));
+
     }
 
 

@@ -1,4 +1,4 @@
-package chess.bot.search;
+package chess.bot.board.moves;
 
 import chess.bot.board.Piece;
 import chess.bot.board.PiecesListBoard;
@@ -103,5 +103,57 @@ public class PseudoMoves {
         }
 
         return moves;
+    }
+
+
+    public static List<Integer> bishopMoves(int[] board, int position) {
+        List<List<Integer>> pieces = findPiecesLists(board, position);
+        return bishopMoves(board, position, pieces.get(0), pieces.get(1));
+    }
+
+    public static List<Integer> bishopMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
+        List<Integer> moves = new ArrayList<>();
+
+        final int MOVESUP = 7 - (position / 8);
+        final int MOVESDOWN = position / 8;
+        final int MOEVSLEFT = 7 - (position % 8);
+        final int MOVESRIGHT = position % 8;
+
+        // vor jeder schleife die zwei werte kopieren und abfahrt
+
+
+        // +7 | left up
+
+
+
+        // +9 | right up
+
+
+
+        // -7 | left down
+
+
+
+        // -9 | right down
+
+
+
+
+        return moves;
+    }
+
+    public static List<List<Integer>> findPiecesLists(int[] board, int position) {
+        List<List<Integer>> result = new ArrayList<>();
+        PiecesListBoard listBoard = new PiecesListBoard(board);
+
+        if (Piece.isWhite(board[position])) {
+            result.add(listBoard.getWhitePiecesCords());
+            result.add(listBoard.getBlackPiecesCords());
+        } else {
+            result.add(listBoard.getBlackPiecesCords());
+            result.add(listBoard.getWhitePiecesCords());
+        }
+
+        return result;
     }
 }

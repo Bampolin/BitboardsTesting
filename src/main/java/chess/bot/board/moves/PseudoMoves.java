@@ -129,33 +129,27 @@ public class PseudoMoves {
     public static List<Integer> bishopMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
         List<Integer> moves = new ArrayList<>();
 
-        final int MOVESUP = 7 - (position / 8);
-        final int MOVESDOWN = position / 8;
-        final int MOEVSLEFT = 7 - (position % 8);
-        final int MOVESRIGHT = position % 8;
-
-        // vor jeder schleife die zwei werte kopieren und abfahrt
+        final int MOVESUP = movesUpForPos(position);
+        final int MOVESDOWN = movesDownForPos(position);
+        final int MOEVSLEFT = movesLeftForPos(position);
+        final int MOVESRIGHT = movesRightForPos(position);
 
 
         // +9 | left up
-
         int movesLeftUp = Math.min(MOEVSLEFT, MOVESUP);
         moves.addAll(movesInLine(movesLeftUp, 9, position, cordsSelf, cordsEnemy));
 
 
         // +7 | right up
-
         int movesRightUP = Math.min(MOVESRIGHT, MOVESUP);
         moves.addAll(movesInLine(movesRightUP, 7, position, cordsSelf, cordsEnemy));
 
 
         // -7 | left down
-
         int movesLeftDown = Math.min(MOEVSLEFT, MOVESDOWN);
         moves.addAll(movesInLine(movesLeftDown, -7, position, cordsSelf, cordsEnemy));
 
         // -9 | right down
-
         int movesRightDown = Math.min(MOVESRIGHT, MOVESDOWN);
         moves.addAll(movesInLine(movesRightDown, -9, position, cordsSelf, cordsEnemy));
 

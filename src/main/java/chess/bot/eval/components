@@ -1,0 +1,10 @@
+plain eval
+    easily adjust:
+        activity weight
+        king safety weight
+
+
+eval with all captures
+    tree with evals for each possible capture
+    minmax search
+        alpha beta pruning

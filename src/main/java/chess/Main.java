@@ -11,29 +11,34 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Board board = setUpTestBoard1();
+        board.setSquare(20, Piece.WHITE | Piece.BISHOP);
         printBoard(board);
+        System.out.println();
+        System.out.println("=======================================================");
+        System.out.println();
+
+
+
+
+
+
 
 
         testPseudoValidRookMoves(board);
+        //testPseudoValidBishopMoves(board);
 
+
+
+
+
+
+
+
+        System.out.println();
         System.out.println("=======================================================");
-        System.out.println("=======================================================");
-        System.out.println("=======================================================");
-        System.out.println("=======================================================");
+        System.out.println();
 
         printAllCords();
-
-        System.out.println("down");
-        System.out.println(36 / 8);
-
-        System.out.println("up");
-        System.out.println(7 - (36 / 8));
-
-        System.out.println("right");
-        System.out.println(36 % 8);
-
-        System.out.println("left");
-        System.out.println(7 - (36 % 8));
 
     }
 
@@ -235,6 +240,28 @@ black pawn   	1101    14
 
 
         }
+
+    }
+
+    public static void testPseudoValidBishopMoves(Board board) {
+        List<Integer> bishopCords = new ArrayList<>();
+
+        for (int i = 0; i <= 63; i++) {
+            if (Piece.isBishop(board.getBoard()[i])) {
+                bishopCords.add(i);
+            }
+        }
+
+        System.out.print("Bishops at: ");
+        for (int i : bishopCords) {
+            System.out.print(i + " | ");
+        }
+        System.out.println();
+
+        for (int i : bishopCords) {
+            System.out.println(PseudoMoves.bishopMoves(board.getBoard(), i));
+        }
+
 
     }
 

@@ -27,6 +27,19 @@ public class PseudoMoves {
         List<Integer> moves = new ArrayList<>();
 
         // up
+        moves.addAll(movesInLine(movesUpForPos(position), 8, position, cordsSelf, cordsEnemy));
+
+        // down
+        moves.addAll(movesInLine(movesDownForPos(position), -8, position, cordsSelf, cordsEnemy));
+
+        // right
+        moves.addAll(movesInLine(movesRightForPos(position), -1, position, cordsSelf, cordsEnemy));
+
+        // left
+        moves.addAll(movesInLine(movesLeftForPos(position), 1, position, cordsSelf, cordsEnemy));
+
+        /*
+        // up
         if (position <= 63 - 8)
         {
             for (int i = position + 8; i <= 63; i += 8) {
@@ -102,6 +115,8 @@ public class PseudoMoves {
             moves.add(i);
         }
 
+         */
+
         return moves;
     }
 
@@ -122,25 +137,54 @@ public class PseudoMoves {
         // vor jeder schleife die zwei werte kopieren und abfahrt
 
 
-        // +7 | left up
+        // +9 | left up
+
+        int movesLeftUp = Math.min(MOEVSLEFT, MOVESUP);
+        moves.addAll(movesInLine(movesLeftUp, 9, position, cordsSelf, cordsEnemy));
 
 
+        // +7 | right up
 
-        // +9 | right up
-
+        int movesRightUP = Math.min(MOVESRIGHT, MOVESUP);
+        moves.addAll(movesInLine(movesRightUP, 7, position, cordsSelf, cordsEnemy));
 
 
         // -7 | left down
 
-
+        int movesLeftDown = Math.min(MOEVSLEFT, MOVESDOWN);
+        moves.addAll(movesInLine(movesLeftDown, -7, position, cordsSelf, cordsEnemy));
 
         // -9 | right down
 
-
+        int movesRightDown = Math.min(MOVESRIGHT, MOVESDOWN);
+        moves.addAll(movesInLine(movesRightDown, -9, position, cordsSelf, cordsEnemy));
 
 
         return moves;
     }
+
+    public static List<Integer> movesInLine(int count, int direction, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
+        List<Integer> moves = new ArrayList<>();
+
+        while (count > 0) {
+            position += direction;
+
+            if (cordsSelf.contains(position)) {
+                break;
+            }
+
+            moves.add(position);
+
+            if (cordsEnemy.contains(position)) {
+                break;
+            }
+
+            count--;
+        }
+
+        return moves;
+    }
+
 
     public static List<List<Integer>> findPiecesLists(int[] board, int position) {
         List<List<Integer>> result = new ArrayList<>();
@@ -155,5 +199,21 @@ public class PseudoMoves {
         }
 
         return result;
+    }
+
+    private static int movesUpForPos(int position) {
+        return 7 - (position / 8);
+    }
+
+    private static int movesDownForPos(int position) {
+        return position / 8;
+    }
+
+    private static int movesRightForPos(int position) {
+        return position % 8;
+    }
+
+    private static int movesLeftForPos(int position) {
+        return 7 - (position % 8);
     }
 }

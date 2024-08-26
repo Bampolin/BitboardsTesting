@@ -131,12 +131,12 @@ public class PseudoMoves {
 
         final int MOVESUP = movesUpForPos(position);
         final int MOVESDOWN = movesDownForPos(position);
-        final int MOEVSLEFT = movesLeftForPos(position);
+        final int MOVESLEFT = movesLeftForPos(position);
         final int MOVESRIGHT = movesRightForPos(position);
 
 
         // +9 | left up
-        int movesLeftUp = Math.min(MOEVSLEFT, MOVESUP);
+        int movesLeftUp = Math.min(MOVESLEFT, MOVESUP);
         moves.addAll(movesInLine(movesLeftUp, 9, position, cordsSelf, cordsEnemy));
 
 
@@ -146,7 +146,7 @@ public class PseudoMoves {
 
 
         // -7 | left down
-        int movesLeftDown = Math.min(MOEVSLEFT, MOVESDOWN);
+        int movesLeftDown = Math.min(MOVESLEFT, MOVESDOWN);
         moves.addAll(movesInLine(movesLeftDown, -7, position, cordsSelf, cordsEnemy));
 
         // -9 | right down
@@ -156,6 +156,91 @@ public class PseudoMoves {
 
         return moves;
     }
+
+
+    public static List<Integer> queenMoves(int[] board, int position) {
+        List<List<Integer>> pieces = findPiecesLists(board, position);
+        return queenMoves(board, position, pieces.get(0), pieces.get(1));
+    }
+
+    public static List<Integer> queenMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
+        List<Integer> moves = rookMoves(board, position, cordsSelf, cordsEnemy);
+        moves.addAll(bishopMoves(board, position, cordsSelf, cordsEnemy));
+        return moves;
+    }
+
+
+    public static List<Integer> knightMoves(int[] board, int position) {
+        List<List<Integer>> pieces = findPiecesLists(board, position);
+
+        return knightMoves(board, position, pieces.get(0), pieces.get(1));
+    }
+
+    public static List<Integer> knightMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
+        List<Integer> moves = new ArrayList<>();
+
+        // up
+        if (movesUpForPos(position) >= 2 ) {
+
+            // left
+            if (movesLeftForPos(position) >= 1 && !cordsSelf.contains(position + 17)) {
+                moves.add(position + 17);
+            }
+
+            // right
+            if (movesRightForPos(position) >= 1 && !cordsSelf.contains(position + 15)) {
+                moves.add(position + 15);
+            }
+        }
+
+        // left
+        if (movesLeftForPos(position) >= 2) {
+
+            // up
+            if (movesUpForPos(position) >= 1 && !cordsSelf.contains(position + 10)) {
+                moves.add(position + 10);
+            }
+
+            // down
+            if (movesDownForPos(position) >= 1 && !cordsSelf.contains(position - 6)) {
+                moves.add(position - 6);
+            }
+        }
+
+        // down
+        if (movesDownForPos(position) >= 2) {
+
+            // left
+            if (movesLeftForPos(position) >= 1 && !cordsSelf.contains(position - 15)) {
+                moves.add(position - 15);
+            }
+
+            // right
+            if (movesRightForPos(position) >= 1 && !cordsSelf.contains(position - 17)) {
+                moves.add(position - 17);
+            }
+        }
+
+        // right
+        if (movesRightForPos(position) >= 2) {
+
+            // up
+            if (movesUpForPos(position) >= 1 && !cordsSelf.contains(position + 6)) {
+                moves.add(position + 6);
+            }
+
+            // down
+            if (movesDownForPos(position) >= 1 && !cordsSelf.contains(position - 10)) {
+                moves.add(position - 10);
+            }
+        }
+
+
+        return moves;
+    }
+
+
+
 
     public static List<Integer> movesInLine(int count, int direction, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
         List<Integer> moves = new ArrayList<>();
@@ -175,7 +260,7 @@ public class PseudoMoves {
 
             count--;
         }
-
+        
         return moves;
     }
 

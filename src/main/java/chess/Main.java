@@ -10,12 +10,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Board board = setUpTestBoard1();
-        board.setSquare(20, Piece.WHITE | Piece.BISHOP);
-        printBoard(board);
-        System.out.println();
-        System.out.println("=======================================================");
-        System.out.println();
+        Board board = setUpTestBoard_KnightTesting();
 
 
 
@@ -23,20 +18,13 @@ public class Main {
 
 
 
-
-        testPseudoValidRookMoves(board);
+        //testPseudoValidRookMoves(board);
         //testPseudoValidBishopMoves(board);
+        testPseudoValidKnightMoves(board);
 
 
 
-
-
-
-
-
-        System.out.println();
         System.out.println("=======================================================");
-        System.out.println();
 
         printAllCords();
 
@@ -105,6 +93,69 @@ public class Main {
         board.setSquare(50, Piece.BLACK | Piece.PAWN);
         board.setSquare(49, Piece.BLACK | Piece.PAWN);
         board.setSquare(48, Piece.BLACK | Piece.PAWN);
+
+        return board;
+    }
+
+    public static Board setUpTestBoard_RookAndBishopTesting() {
+        Board board = new Board();
+
+        //white
+        board.setSquare(1, Piece.WHITE | Piece.KING);
+        board.setSquare(3, Piece.WHITE | Piece.ROOK);
+        board.setSquare(21, Piece.WHITE | Piece.BISHOP);
+        board.setSquare(18, Piece.WHITE | Piece.QUEEN);
+
+        board.setSquare(15, Piece.WHITE | Piece.PAWN);
+        board.setSquare(14, Piece.WHITE | Piece.PAWN);
+        board.setSquare(13, Piece.WHITE | Piece.PAWN);
+        board.setSquare(20, Piece.WHITE | Piece.PAWN);
+        board.setSquare(10, Piece.WHITE | Piece.PAWN);
+        board.setSquare(9, Piece.WHITE | Piece.PAWN);
+        board.setSquare(8, Piece.WHITE | Piece.PAWN);
+
+
+        //black
+        board.setSquare(57, Piece.BLACK | Piece.KING);
+        board.setSquare(59, Piece.BLACK | Piece.ROOK);
+        board.setSquare(45, Piece.BLACK | Piece.BISHOP);
+        board.setSquare(42, Piece.BLACK | Piece.QUEEN);
+
+        board.setSquare(48, Piece.BLACK | Piece.PAWN);
+        board.setSquare(49, Piece.BLACK | Piece.PAWN);
+        board.setSquare(50, Piece.BLACK | Piece.PAWN);
+        board.setSquare(44, Piece.BLACK | Piece.PAWN);
+        board.setSquare(53, Piece.BLACK | Piece.PAWN);
+        board.setSquare(54, Piece.BLACK | Piece.PAWN);
+        board.setSquare(39, Piece.BLACK | Piece.PAWN);
+        board.setSquare(31, Piece.BLACK | Piece.PAWN);
+
+        return board;
+    }
+
+    public static Board setUpTestBoard_KnightTesting() {
+        Board board = new Board();
+
+        //white
+
+        board.setSquare(0, Piece.WHITE | Piece.KNIGHT);
+        board.setSquare(7, Piece.WHITE | Piece.KNIGHT);
+        board.setSquare(28, Piece.WHITE | Piece.KNIGHT);
+
+        board.setSquare(11, Piece.WHITE | Piece.PAWN);
+        board.setSquare(18, Piece.WHITE | Piece.PAWN);
+
+
+        //black
+
+        board.setSquare(63, Piece.BLACK | Piece.KNIGHT);
+        board.setSquare(56, Piece.BLACK | Piece.KNIGHT);
+
+        board.setSquare(43, Piece.BLACK | Piece.PAWN);
+        board.setSquare(38, Piece.BLACK | Piece.PAWN);
+
+
+
 
         return board;
     }
@@ -263,6 +314,44 @@ black pawn   	1101    14
         }
 
 
+    }
+
+    public static void testPseudoValidKnightMoves(Board board) {
+        List<Integer> knightCords = new ArrayList<>();
+
+        for (int i = 0; i <= 63; i++) {
+            if (Piece.isKnight(board.getBoard()[i])) {
+                knightCords.add(i);
+            }
+        }
+
+        System.out.print("Knights at: ");
+        for (int i : knightCords) {
+            System.out.print(i + " | ");
+        }
+        System.out.println();
+
+        for (int i : knightCords) {
+            System.out.println(i);
+
+            System.out.print("without cords: ");
+            long before = System.nanoTime();
+            PseudoMoves.knightMoves(board.getBoard(), i);
+            long after = System.nanoTime();
+            System.out.println((after - before) / 1000);
+
+            List<Integer> friendly = PseudoMoves.findPiecesLists(board.getBoard(), i).get(0);
+            List<Integer> enemy =  PseudoMoves.findPiecesLists(board.getBoard(), i).get(1);
+
+
+            System.out.print("with cords: ");
+            before = System.nanoTime();
+            PseudoMoves.knightMoves(board.getBoard(), i, friendly, enemy);
+            after = System.nanoTime();
+
+            System.out.println((after - before) / 1000);
+            System.out.println(PseudoMoves.knightMoves(board.getBoard(), i));
+        }
     }
 
     public static void printAllCords() {

@@ -1,5 +1,6 @@
 package chess.bot.board.moves;
 
+import chess.bot.board.Board;
 import chess.bot.board.Piece;
 import chess.bot.board.PiecesListBoard;
 
@@ -238,6 +239,81 @@ public class PseudoMoves {
 
         return moves;
     }
+
+
+    public static List<Integer> whitePawnMoves(int[] board, int position, int enPassantOnSquare) {
+        List<List<Integer>> pieces = findPiecesLists(board, position);
+
+        return whitePawnMoves(board, position, pieces.get(0), pieces.get(1), enPassantOnSquare);
+    }
+
+    public static List<Integer> whitePawnMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy, int enPassantOnSquare) {
+        List<Integer> moves = new ArrayList<>();
+
+        int up;
+
+        // pawn on second rank -> two up allowed
+        if (position < 16) {
+            up = 2;
+        } else {
+            up = 1;
+        }
+
+        int posUP = position;
+        while (up > 0) {
+            posUP += 8;
+            if (cordsEnemy.contains(posUP) || cordsSelf.contains(posUP)) {
+                break;
+            }
+
+            moves.add(posUP);
+            up--;
+        }
+
+
+        // up right
+        if (cordsEnemy.contains(position + 7) || position + 7 == enPassantOnSquare) {
+            moves.add(position + 7);
+        }
+
+        // up left
+        if (cordsEnemy.contains(position + 9) || position + 9 == enPassantOnSquare) {
+            moves.add(position + 9);
+        }
+
+        return moves;
+    }
+
+    public static List<Integer> blackPawnMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy, int enPassantOnSquare) {
+        List<Integer> moves = new ArrayList<>();
+
+        // down
+        if (!cordsEnemy.contains(position - 8) && !cordsSelf.contains(position - 8)) {
+            moves.add(position - 8);
+
+            // down two
+            if (position > 48 && !cordsEnemy.contains(position - 16) && !cordsSelf.contains(position - 16)) {
+                moves.add(position - 16);
+            }
+
+        }
+
+        // down right
+        int movedPos = position - 9;
+        if (cordsEnemy.contains(movedPos) || movedPos == enPassantOnSquare) {
+            moves.add(movedPos);
+        }
+
+        // down left
+        movedPos = position - 7;
+        if (cordsEnemy.contains(movedPos) || movedPos == enPassantOnSquare) {
+            moves.add(movedPos);
+        }
+
+
+        return moves;
+    }
+
 
 
 

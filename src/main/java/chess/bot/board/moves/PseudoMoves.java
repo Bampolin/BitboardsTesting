@@ -230,13 +230,12 @@ public class PseudoMoves {
         return moves;
     }
 
-
-    public static List<Integer> kingMoves(int[] board, int position) {
+    public static List<Integer> kingMoves(int[] board, int position, boolean canCastleKingSide, boolean canCastleQueenSide) {
         List<List<Integer>> pieces = findPiecesLists(board, position);
-        return kingMoves(board, position, pieces.get(0), pieces.get(1));
+        return kingMoves(board, position, pieces.get(0), pieces.get(1), canCastleKingSide, canCastleQueenSide);
     }
 
-    public static List<Integer> kingMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
+    public static List<Integer> kingMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy, boolean canCastleKingSide, boolean canCastleQueenSide) {
         List<Integer> moves = new ArrayList<>();
         int[] possibleDirections = {8, -8, 1, -1, 9, -9, 7, -7};
 
@@ -254,9 +253,17 @@ public class PseudoMoves {
             }
         }
 
+        // Castling moves
+        if (canCastleKingSide && !cordsSelf.contains(position + 1) && !cordsEnemy.contains(position + 1) && !cordsEnemy.contains(position + 2)) {
+            moves.add(position + 2);
+        }
+
+        if (canCastleQueenSide && !cordsSelf.contains(position - 1) && !cordsSelf.contains(position - 2) && !cordsEnemy.contains(position - 1) && !cordsEnemy.contains(position - 2)) {
+            moves.add(position - 2);
+        }
+
         return moves;
     }
-
 
     public static List<Integer> movesInLine(int count, int direction, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
         List<Integer> moves = new ArrayList<>();
@@ -276,7 +283,7 @@ public class PseudoMoves {
 
             count--;
         }
-        
+
         return moves;
     }
 

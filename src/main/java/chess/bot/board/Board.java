@@ -19,24 +19,12 @@ public class Board {
         enPassantOnSquare = 0;
     }
 
-    public Board(int[] board) {
-        setBoard(board);
-    }
+
+    //region get/set
 
     public void setSquare(int square, int value) {
         board[square] = value;
     }
-
-
-    //region get/set
-    public int[] getBoard() {
-        return board;
-    }
-
-    public void setBoard(int[] board) {
-        this.board = board;
-    }
-
 
     public void setWhiteCastlingLeft(boolean whiteCastlingLeft) {
         this.whiteCastlingLeft = whiteCastlingLeft;

@@ -9,19 +9,8 @@ import java.util.List;
 
 public class PseudoMoves {
     public static List<Integer> rookMoves(int[] board, int position) {
-        List<Integer> cordsSelf;
-        List<Integer> cordsEnemy;
-        PiecesListBoard listBoard = new PiecesListBoard(board);
-
-        if (Piece.isWhite(board[position])) {
-            cordsSelf = listBoard.getWhitePiecesCords();
-            cordsEnemy = listBoard.getBlackPiecesCords();
-        } else {
-            cordsSelf = listBoard.getBlackPiecesCords();
-            cordsEnemy = listBoard.getWhitePiecesCords();
-        }
-
-        return rookMoves(board, position, cordsSelf, cordsEnemy);
+        List<List<Integer>> pieces = findPiecesLists(board, position);
+        return rookMoves(board, position, pieces.get(0), pieces.get(1));
     }
 
     public static List<Integer> rookMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {

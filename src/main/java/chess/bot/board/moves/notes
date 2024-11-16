@@ -1,3 +1,5 @@
 Idee:
     * PseudoMoves:
         - Die Positionen der Figuren nicht für jeden Funktionsaufruf neu suchen, sondern übergeben, zumindest die Möglichkeit dafür schaffen
+        - int[] board muss eigentlich nicht übergeben werden, wird nie verwendet durch die Listen mit den Positionen
+    

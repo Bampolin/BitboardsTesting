@@ -19,6 +19,10 @@ public class Board {
         enPassantOnSquare = 0;
     }
 
+    public Board(int[] board) {
+        this.board = board;
+    }
+
 
     //region get/set
 
@@ -65,5 +69,10 @@ public class Board {
     public int getEnPassantOnSquare() {
         return enPassantOnSquare;
     }
+
+    public int[] getBoard() {
+        return board;
+    }
+
     //endregion
 }

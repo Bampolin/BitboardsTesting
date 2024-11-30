@@ -219,12 +219,12 @@ public class PseudoMoves {
         return moves;
     }
 
-    public static List<Integer> kingMoves(int[] board, int position, boolean canCastleKingSide, boolean canCastleQueenSide) {
+    public static List<Integer> kingMoves(int[] board, int position) {
         List<List<Integer>> pieces = findPiecesLists(board, position);
-        return kingMoves(board, position, pieces.get(0), pieces.get(1), canCastleKingSide, canCastleQueenSide);
+        return kingMoves(board, position, pieces.get(0), pieces.get(1));
     }
 
-    public static List<Integer> kingMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy, boolean canCastleKingSide, boolean canCastleQueenSide) {
+    public static List<Integer> kingMoves(int[] board, int position, List<Integer> cordsSelf, List<Integer> cordsEnemy) {
         List<Integer> moves = new ArrayList<>();
         int[] possibleDirections = {8, -8, 1, -1, 9, -9, 7, -7};
 
@@ -232,6 +232,8 @@ public class PseudoMoves {
             int targetPos = position + direction;
 
             if (targetPos >= 0 && targetPos < 64) {
+                // Math.abs((position % 8) - (targetPos % 8)) != 1 um bei horizontalen zügen nicht aus dem
+                // Brett hinauszufahren
                 if ((direction == 1 || direction == -1) && Math.abs((position % 8) - (targetPos % 8)) != 1) {
                     continue;
                 }
@@ -242,6 +244,7 @@ public class PseudoMoves {
             }
         }
 
+        /*
         // Castling moves
         if (canCastleKingSide && !cordsSelf.contains(position + 1) && !cordsEnemy.contains(position + 1) && !cordsEnemy.contains(position + 2)) {
             moves.add(position + 2);
@@ -250,6 +253,7 @@ public class PseudoMoves {
         if (canCastleQueenSide && !cordsSelf.contains(position - 1) && !cordsSelf.contains(position - 2) && !cordsEnemy.contains(position - 1) && !cordsEnemy.contains(position - 2)) {
             moves.add(position - 2);
         }
+         */
 
         return moves;
     }

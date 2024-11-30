@@ -27,6 +27,11 @@ public class Main {
 
         printAllCords();
 
+        System.out.println(5%8);
+        System.out.println(6%8);
+
+
+
     }
 
 

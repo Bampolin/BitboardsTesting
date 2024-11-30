@@ -27,42 +27,45 @@ public class Game {
         List<Integer> friendly;
         List<Integer> enemy;
 
-        PiecesListBoard piecesListBoard = new PiecesListBoard(states.getLast());
+        PiecesListBoard piecesListBoard = new PiecesListBoard(states.peek());
 
-        if (turn()) {
-            friendly = piecesListBoard.getBlackPiecesCords();
-            enemy = piecesListBoard.getWhitePiecesCords();
-        } else {
-            friendly = piecesListBoard.getWhitePiecesCords();
-            enemy = piecesListBoard.getBlackPiecesCords();
-        }
+        friendly = turn()
+                ? piecesListBoard.getBlackPiecesCords()
+                : piecesListBoard.getWhitePiecesCords();
 
-
+        enemy = turn()
+                ? piecesListBoard.getWhitePiecesCords()
+                : piecesListBoard.getBlackPiecesCords();
 
 
 
         for (int from : friendly) {
 
+            int pieceFrom = getCurrentBoard().getBoard()[from];
+            List<Integer> pseudo;
+
             if (Piece.isKing(from)) {
+
+                pseudo = PseudoMoves.kingMoves(getCurrentBoard().getBoard(), from, friendly, enemy);
+
 
 
 
             } else {
-                List<Integer> pseudo;
 
-                if (Piece.isRook(from)) {
-                    pseudo = PseudoMoves.rookMoves(states.getLast().getBoard(), from, friendly, enemy);
-                } else if (Piece.isBishop(from)) {
-                    pseudo = PseudoMoves.bishopMoves(states.getLast().getBoard(), from, friendly, enemy);
-                } else if (Piece.isQueen(from)) {
-                    pseudo = PseudoMoves.queenMoves(states.getLast().getBoard(), from, friendly, enemy);
-                } else if (Piece.isKnight(from)) {
-                    pseudo = PseudoMoves.knightMoves(states.getLast().getBoard(), from, friendly, enemy);
+                if (Piece.isRook(pieceFrom)) {
+                    pseudo = PseudoMoves.rookMoves(getCurrentBoard().getBoard(), from, friendly, enemy);
+                } else if (Piece.isBishop(pieceFrom)) {
+                    pseudo = PseudoMoves.bishopMoves(getCurrentBoard().getBoard(), from, friendly, enemy);
+                } else if (Piece.isQueen(pieceFrom)) {
+                    pseudo = PseudoMoves.queenMoves(getCurrentBoard().getBoard(), from, friendly, enemy);
+                } else if (Piece.isKnight(pieceFrom)) {
+                    pseudo = PseudoMoves.knightMoves(getCurrentBoard().getBoard(), from, friendly, enemy);
                 } else {
                     if (turn()) {
-                        pseudo = PseudoMoves.blackPawnMoves(states.getLast().getBoard(), from, friendly, enemy, states.getLast().getEnPassantOnSquare());
+                        pseudo = PseudoMoves.blackPawnMoves(getCurrentBoard().getBoard(), from, friendly, enemy, getCurrentBoard().getEnPassantOnSquare());
                     } else {
-                        pseudo = PseudoMoves.whitePawnMoves(states.getLast().getBoard(), from, friendly, enemy, states.getLast().getEnPassantOnSquare());
+                        pseudo = PseudoMoves.whitePawnMoves(getCurrentBoard().getBoard(), from, friendly, enemy, getCurrentBoard().getEnPassantOnSquare());
                     }
                 }
 
@@ -112,5 +115,9 @@ public class Game {
         // true = black
 
         return color ?  blackKingInCheck() : whiteKingInCheck();
+    }
+
+    public Board getCurrentBoard() {
+        return states.peek();
     }
 }
